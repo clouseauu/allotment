@@ -9,7 +9,7 @@ module Allotment
       @logger = options[:logger] || Logger.new(STDOUT)
     end
 
-    def usage
+    def show_usage
       process_quota
     end
 
@@ -19,20 +19,20 @@ module Allotment
 
     def process_quota
 
-      begin
+      # begin
 
-        require_relative "./providers/#{provider}"
-        klass = Object.const_get("::Providers::#{humanise provider}")
-        provider_data = klass.new
+        require "allotment/providers/#{provider}"
+        klass = Object.const_get("Allotment::Providers::#{humanise provider}")
+        provider_data = klass.new provider, logger
 
-        logger.info "Usage statistics for #{humanise provider}."
-        logger.info "Shiftover date: xxx. x days (y%) left"
-        logger.info "Peak data: x GB (x%) of y"
-        logger.info "Offpeak data: x GB (x%) of y"
+        logger.notify 'info', "Usage statistics for #{humanise provider}."
+        logger.notify 'info', "Shiftover date: xxx. x days (y%) left"
+        logger.notify 'info', "Peak data: x GB (x%) of y"
+        logger.notify 'info', "Offpeak data: x GB (x%) of y"
 
-      rescue StandardError => e
-        logger.error "Something went wrong. Couldnt download #{vid}"
-      end
+      # rescue StandardError => e
+      #   logger.error "Something went wrong. Couldnt get stats for #{humanise provider}"
+      # end
 
     end
 

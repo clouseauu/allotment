@@ -6,7 +6,7 @@ module Allotment
 
       attr_reader :name, :logger
 
-      def initialize name
+      def initialize name, logger
         @name = name
         @logger = logger
         process

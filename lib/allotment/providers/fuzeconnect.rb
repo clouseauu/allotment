@@ -1,10 +1,11 @@
-module BroadbandQuota
+module Allotment
 
   module Providers
 
     class Fuzeconnect < Provider
 
       def process
+        ap "fuze connect"
         login
         visit_data_page
       end
