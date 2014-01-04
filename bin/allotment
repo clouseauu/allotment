@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require "allotment/cli"
+
+allotment = Allotment::CLI.run
+exit(1) unless allotment
