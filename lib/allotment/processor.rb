@@ -5,7 +5,7 @@ module Allotment
   class Processor
 
     def initialize options = {}
-      @provider = options[:provider] || 'fuzeconnect'
+      @provider = options[:provider]
       @logger = options[:logger] || Logger.new(STDOUT)
     end
 
@@ -15,20 +15,23 @@ module Allotment
 
     private
 
-    attr_reader :provider, :logger, :humanized_provider
+    attr_reader :provider, :logger
 
     def process_quota
 
       # begin
 
-        require "allotment/providers/#{provider}"
-        klass = Object.const_get("Allotment::Providers::#{humanise provider}")
+        require "allotment/providers/#{provider.name}"
+        klass = Object.const_get("Allotment::Providers::#{humanise provider.name}")
         provider_data = klass.new provider, logger
 
-        logger.notify 'info', "Usage statistics for #{humanise provider}."
-        logger.notify 'info', "Shiftover date: xxx. x days (y%) left"
-        logger.notify 'info', "Peak data: x GB (x%) of y"
-        logger.notify 'info', "Offpeak data: x GB (x%) of y"
+        puts "Usage statistics for #{humanise provider.name}."
+        puts "Shiftover date: xxx. x days (y%) left"
+        puts "Peak data: x GB (x%) of y"
+        puts "Offpeak data: x GB (x%) of y"
+        logger.info "Successful retrieval. x days (y%) left until shiftover"
+        logger.info "Peak: x GB (x%) of y / Offpeak: x GB (x%) of y"
+
 
       # rescue StandardError => e
       #   logger.error "Something went wrong. Couldnt get stats for #{humanise provider}"
@@ -37,7 +40,7 @@ module Allotment
     end
 
     def humanise str
-      @humanized_provider ||= "#{str[0].upcase}#{str[1..-1]}"
+      "#{str[0].upcase}#{str[1..-1]}"
     end
 
   end

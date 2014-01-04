@@ -4,10 +4,17 @@ module Allotment
 
     class Fuzeconnect < Provider
 
+      SITE_URL = "http://www.fuzeconnect.com.au"
+      USAGE_PAGE = "myaccount/usage.php"
+
+      def initialize provider, logger
+        super provider, logger
+        @logged_in = false
+      end
+
       def process
         ap "fuze connect"
         login
-        visit_data_page
       end
 
       def shiftover_date
@@ -49,8 +56,16 @@ module Allotment
 
       private
 
-      def login; end
-      def visit_data_page; end
+      attr_reader :provider, :logger, :humanized_provider, :logged_in, :data_page
+
+      def login
+        agent.get("#{SITE_URL}/#{USAGE_PAGE}") do | page |
+          @data_page = page.form_with(action: "/#{USAGE_PAGE}") do | form_object |
+            form_object.uName = provider.username
+            form_object.pword = provider.password
+          end.submit
+        end
+      end
 
     end
 

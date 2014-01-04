@@ -5,17 +5,18 @@ module Allotment
   module CLI
 
     def run
-      ap options
-      log = options.logfile ? Logger.new(options.logfile) : Logger.new(STDOUT)
+      o = options
+      raise ArgumentError.new('Missing username and/or password') if (o.username.nil? || o.password.nil?)
+      log = o.logfile ? Logger.new(o.logfile) : Logger.new(STDOUT)
       log.level = Logger::INFO
-      p = Allotment::Processor.new(provider: options.provider, logger: log)
+      p = Allotment::Processor.new(provider: o, logger: log)
       p.show_usage
     end
 
     def options
       Trollop::options do
-        opt :provider, "Provider", type: :string, default: "fuzeconnect"
-        opt :logfile, "Log File", type: :string
+        opt :name, "Provider", type: :string, :short => "-n", default: "fuzeconnect"
+        opt :logfile, "Log File", type: :string, default: "/Users/daniel/allotment.log"
         opt :username, "Username", type: :string
         opt :password, "Password", type: :string
       end

@@ -4,11 +4,14 @@ module Allotment
 
     class Provider
 
-      attr_reader :name, :logger
+      attr_reader :name, :logger, :agent, :username, :password
 
-      def initialize name, logger
-        @name = name
+      def initialize provider, logger
+        @name = provider.name
+        @username = provider.username
+        @password = provider.password
         @logger = logger
+        @agent = Mechanize.new { |a| a.user_agent_alias = "Mac Safari" }
         process
       end
 
