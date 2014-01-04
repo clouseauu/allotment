@@ -4,12 +4,10 @@ module Allotment
 
     class Provider
 
-      attr_reader :name, :logger, :agent, :username, :password
+      attr_reader :provider, :logger, :agent
 
       def initialize provider, logger
-        @name = provider.name
-        @username = provider.username
-        @password = provider.password
+        @provider = provider
         @logger = logger
         @agent = Mechanize.new { |a| a.user_agent_alias = "Mac Safari" }
         process
@@ -27,7 +25,7 @@ module Allotment
         raise NoMethodError.new "Method not implemented"
       end
 
-      def percentage_time_left
+      def percentage_time_passed
         raise NoMethodError.new "Method not implemented"
       end
 
