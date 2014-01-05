@@ -10,6 +10,7 @@ module Allotment
         @provider = provider
         @logger = logger
         @agent = Mechanize.new { |a| a.user_agent_alias = "Mac Safari" }
+        @name = provider.name
         process
       end
 

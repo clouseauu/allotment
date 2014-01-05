@@ -19,28 +19,23 @@ module Allotment
 
     def process_quota
 
-      begin
+      # begin
 
         require "allotment/providers/#{provider.name}"
-        klass = Object.const_get("Allotment::Providers::#{humanise provider.name}")
+        klass = Object.const_get("Allotment::Providers::#{provider.name[0].upcase}#{provider.name[1..-1]}")
         provider_data = klass.new provider, logger
+        message = Allotment::MessageBuilder.new provider_data
 
-        puts "Usage statistics for #{humanise provider.name}."
-        puts "Shiftover date: #{provider_data.shiftover_date}. #{provider_data.days_left} days left (#{provider_data.percentage_time_passed}% has passed)"
-        puts "Peak data: #{provider_data.used_peak_data}GB (#{provider_data.percentage_peak_data}%) of #{provider_data.available_peak_data}GB"
-        puts "Offpeak data: #{provider_data.used_offpeak_data}GB (#{provider_data.percentage_offpeak_data}%) of #{provider_data.available_offpeak_data}GB"
+        puts message.terminal_output
+
         logger.info "#{humanise provider.name} Successful retrieval. #{provider_data.days_left} days left (#{provider_data.percentage_time_passed}% has gone by) until shiftover (#{provider_data.shiftover_date})"
         logger.info "Peak: #{provider_data.used_peak_data}GB (#{provider_data.percentage_peak_data}%) of #{provider_data.available_peak_data}GB / Offpeak: #{provider_data.used_offpeak_data}GB (#{provider_data.percentage_offpeak_data}%) of #{provider_data.available_offpeak_data}GB"
 
 
-      rescue StandardError => e
-        logger.error "Something went wrong. Couldnt get stats for #{humanise provider}"
-      end
+      # rescue StandardError => e
+      #   logger.error "Something went wrong. Couldnt get stats for #{provider.name}"
+      # end
 
-    end
-
-    def humanise str
-      "#{str[0].upcase}#{str[1..-1]}"
     end
 
   end

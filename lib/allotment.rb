@@ -6,6 +6,7 @@ require "date"
 require "mechanize"
 require "trollop"
 require "allotment/version"
+require "allotment/message_builder"
 require "allotment/provider"
 require "allotment/processor"
 
