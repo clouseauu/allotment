@@ -15,10 +15,12 @@ module Allotment
 
     def options
       Trollop::options do
-        opt :name, "Provider", type: :string, :short => "-n", default: "fuzeconnect"
-        opt :logfile, "Log File", type: :string, default: "/Users/daniel/allotment.log"
-        opt :username, "Username", type: :string
-        opt :password, "Password", type: :string
+        opt :name,      "Provider", type: :string, :short => "-n", default: "fuzeconnect"
+        opt :logfile,   "Log File", type: :string, default: "#{File.expand_path(File.join(ENV['HOME'], 'allotment.log'))}"
+        opt :username,  "Username", type: :string
+        opt :password,  "Password", type: :string
+        opt :puser,     "Pushover User Token", type: :string, :short => "-t"
+        opt :papp,      "Pushover App Token", type: :string, :short => "-a"
       end
     end
 

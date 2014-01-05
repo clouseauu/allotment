@@ -7,6 +7,8 @@ module Allotment
       SITE_URL = "http://www.fuzeconnect.com.au"
       USAGE_PAGE = "myaccount/usage.php"
 
+      attr_reader :name
+
       def process
         login
       end

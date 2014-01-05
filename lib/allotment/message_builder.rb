@@ -20,9 +20,13 @@ module Allotment
     end
 
     def logger_output
+      msg =  "#{humanise data.name} Successful retrieval. #{data.days_left} days left (#{data.percentage_time_passed}% has gone by) until shiftover (#{data.shiftover_date})\n"
+      msg << "Peak: #{data.used_peak_data}GB (#{data.percentage_peak_data}%) of #{data.available_peak_data}GB / Offpeak: #{data.used_offpeak_data}GB (#{data.percentage_offpeak_data}%) of #{data.available_offpeak_data}GB\n"
     end
 
     def pushover_output
+      msg =  "#{data.days_left} days left (#{data.percentage_time_passed}% time passed)\n"
+      msg << "Peak: #{data.used_peak_data}GB (#{data.percentage_peak_data}%) / Offpeak: #{data.used_offpeak_data}GB (#{data.percentage_offpeak_data}%)\n"
     end
 
     private
