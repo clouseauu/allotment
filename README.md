@@ -1,6 +1,6 @@
 # Allotment
 
-TODO: Write a gem description
+Command line tool to check Internet caps. Currently supports just one provider: Fuzeconnect.
 
 ## Installation
 
@@ -18,7 +18,29 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+    $ allotment -h
+
+CLI options are as follows
+
+    Options:
+          --name, -n <s>:   Provider (default: fuzeconnect)
+       --logfile, -l <s>:   Log File (default: /Users/daniel/allotment.log)
+      --username, -u <s>:   Username
+      --password, -p <s>:   Password
+         --puser, -t <s>:   Pushover User Token
+          --papp, -a <s>:   Pushover App Token
+              --help, -h:   Show this message
+
+
+### Example
+
+    $ allotment -n fuzeconnect -u <username> -p <password>
+
+Allotment supports pushover notifications as well:
+
+    $ allotment -n fuzeconnect -u <username> -p <password> -t <user_token> -a <app_token>
+
+This is still pretty much a work in progress
 
 ## Contributing
 

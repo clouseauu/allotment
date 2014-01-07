@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Allotment::VERSION
   spec.authors       = ["Daniel Angel-Bradford"]
   spec.email         = ["locusdelicti@gmail.com"]
-  spec.description   = %q{Write a gem description}
-  spec.summary       = %q{Write a gem summary}
+  spec.description   = %q{A gem to check Internet quotas}
+  spec.summary       = %q{Check internet quotas from the command line}
   spec.homepage      = ""
   spec.license       = "MIT"
 
